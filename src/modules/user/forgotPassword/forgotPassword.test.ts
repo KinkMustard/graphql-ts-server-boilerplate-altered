@@ -1,15 +1,15 @@
+import faker from "faker";
+import Redis from "ioredis";
 import { Connection } from "typeorm";
-import * as Redis from "ioredis";
-import * as faker from "faker";
 
-import { User } from "../../../entity/User";
-import { TestClient } from "../../../utils/TestClient";
+import { default as User } from "../../../entity/User";
+import { createTestConn } from "../../../testUtils/createTestConn";
 import { createForgotPasswordLink } from "../../../utils/createForgotPasswordLink";
 import { forgotPasswordLockAccount } from "../../../utils/forgotPasswordLockAccount";
+import { TestClient } from "../../../utils/TestClient";
+import { forgotPasswordLockedError } from "../login/errorMessages";
 import { passwordNotLongEnough } from "../register/errorMessages";
 import { expiredKeyError } from "./errorMessages";
-import { forgotPasswordLockedError } from "../login/errorMessages";
-import { createTestConn } from "../../../testUtils/createTestConn";
 
 let conn: Connection;
 export const redis = new Redis();
@@ -71,7 +71,7 @@ describe("forgot password", () => {
     const response = await client.forgotPasswordChange(newPassword, key);
 
     expect(response.data).toEqual({
-      forgotPasswordChange: null
+      forgotPasswordChange: undefined
     });
 
     // make sure redis key expires after password change
@@ -90,7 +90,7 @@ describe("forgot password", () => {
 
     expect(await client.login(email, newPassword)).toEqual({
       data: {
-        login: null
+        login: undefined
       }
     });
   });

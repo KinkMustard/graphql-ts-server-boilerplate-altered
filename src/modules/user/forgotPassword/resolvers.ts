@@ -1,14 +1,14 @@
-import * as yup from "yup";
 import * as bcrypt from "bcryptjs";
+import * as yup from "yup";
 
-import { ResolverMap } from "../../../types/graphql-utils";
-import { forgotPasswordLockAccount } from "../../../utils/forgotPasswordLockAccount";
-import { createForgotPasswordLink } from "../../../utils/createForgotPasswordLink";
-import { User } from "../../../entity/User";
-import { userNotFoundError, expiredKeyError } from "./errorMessages";
 import { forgotPasswordPrefix } from "../../../constants";
-import { registerPasswordValidation } from "../../../yupSchemas";
+import { default as User } from "../../../entity/User";
+import { ResolverMap } from "../../../types/graphql-utils";
+import { createForgotPasswordLink } from "../../../utils/createForgotPasswordLink";
+import { forgotPasswordLockAccount } from "../../../utils/forgotPasswordLockAccount";
 import { formatYupError } from "../../../utils/formatYupError";
+import { registerPasswordValidation } from "../../../yupSchemas";
+import { expiredKeyError, userNotFoundError } from "./errorMessages";
 
 // 20 minutes
 // lock account
@@ -24,7 +24,7 @@ export const resolvers: ResolverMap = {
       { email }: GQL.ISendForgotPasswordEmailOnMutationArguments,
       { redis }
     ) => {
-      const user = await User.findOne({ where: { email } });
+      const user = await User.findOne({ email });
       if (!user) {
         return [
           {
@@ -77,7 +77,7 @@ export const resolvers: ResolverMap = {
 
       await Promise.all([updatePromise, deleteKeyPromise]);
 
-      return null;
+      return undefined;
     }
   }
 };

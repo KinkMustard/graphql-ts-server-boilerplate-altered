@@ -1,4 +1,4 @@
-import * as SparkPost from "sparkpost";
+import SparkPost from "sparkpost";
 const client = new SparkPost(process.env.SPARKPOST_API_KEY);
 
 export const sendEmail = async (recipient: string, url: string) => {

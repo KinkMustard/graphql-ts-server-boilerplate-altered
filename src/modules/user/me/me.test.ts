@@ -1,9 +1,9 @@
-import { Connection } from "typeorm";
 import * as faker from "faker";
+import { Connection } from "typeorm";
 
-import { User } from "../../../entity/User";
-import { TestClient } from "../../../utils/TestClient";
+import { default as User } from "../../../entity/User";
 import { createTestConn } from "../../../testUtils/createTestConn";
+import { TestClient } from "../../../utils/TestClient";
 
 let userId: string;
 let conn: Connection;

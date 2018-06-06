@@ -1,14 +1,14 @@
 import * as yup from "yup";
 
+import { default as User } from "../../../entity/User";
 import { ResolverMap } from "../../../types/graphql-utils";
-import { User } from "../../../entity/User";
 import { formatYupError } from "../../../utils/formatYupError";
+import { registerPasswordValidation } from "../../../yupSchemas";
 import {
   duplicateEmail,
   emailNotLongEnough,
   invalidEmail
 } from "./errorMessages";
-import { registerPasswordValidation } from "../../../yupSchemas";
 // import { createConfirmEmailLink } from "../../utils/createConfirmEmailLink";
 // import { sendEmail } from "../../utils/sendEmail";
 
@@ -50,7 +50,7 @@ export const resolvers: ResolverMap = {
         ];
       }
 
-      const user = User.create({
+      const user = new User({
         email,
         password
       });
@@ -64,7 +64,7 @@ export const resolvers: ResolverMap = {
       //   );
       // }
 
-      return null;
+      return undefined;
     }
   }
 };

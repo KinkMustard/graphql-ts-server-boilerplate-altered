@@ -1,11 +1,11 @@
-import * as Redis from "ioredis";
+import * as faker from "faker";
+import Redis from "ioredis";
 import fetch from "node-fetch";
 import { Connection } from "typeorm";
-import * as faker from "faker";
 
-import { createConfirmEmailLink } from "./createConfirmEmailLink";
-import { User } from "../../../entity/User";
+import { default as User } from "../../../entity/User";
 import { createTestConn } from "../../../testUtils/createTestConn";
+import { createConfirmEmailLink } from "./createConfirmEmailLink";
 
 let userId = "";
 const redis = new Redis();
